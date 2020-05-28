@@ -3,25 +3,44 @@ import random
 from django.conf import settings
 
 # Create your models here.
-user = settings.AUTH_USER_MODEL
+User = settings.AUTH_USER_MODEL
+
+
+class TweetLike(models.Model):
+    tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
 
 class Tweet(models.Model):
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    parent = models.ForeignKey("self", null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(
+        User, related_name='tweet_user', blank=True, through=TweetLike)
     content = models.TextField(blank=True, null=True)
     image = models.FileField(upload_to='images/', blank=True, null=True)
-
-    #def __str__(self):
+    timestamp = models.DateTimeField(auto_now_add=True)
+    # def __str__(self):
     #    return self.content
 
+    # Enabling last tweet to be viewed first
 
-    #Enabling last tweet to be viewed first
     class Meta:
-        ordering =['-id']
+        ordering = ['-id']
 
-    #Method to return a dictionary of tweet data
+    @property
+    def is_retweet(self):
+        return self.parent != None
+ 
+        
+    # Method to return a dictionary of tweet data
+    # Replaced with serializers in DRF
+
     def serialize(self):
         return {
             "id": self.id,
             "content": self.content,
-            "likes": random.randint(0,255)
+            "likes": random.randint(0, 255)
         }
+        
+   
