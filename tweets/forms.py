@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 
 
-from .views import Tweet
+from .models import Tweet
 
 MAX_TWEET_LENGTH = settings.MAX_TWEET_LENGTH
 

@@ -17,8 +17,7 @@ export function TweetCreate(props) {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newVal = textAreaRef.current.value;
-    //backend api request
+    const newVal = textAreaRef.current.value;    
     apiTweetCreate(newVal, handleBackendUpdate);
     textAreaRef.current.value = "";
   };

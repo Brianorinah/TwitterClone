@@ -16,8 +16,13 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <!-- Bootstrap CSS --> 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
 
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -32,7 +37,8 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="tweetme" data-username="orina" data-can-tweet='false'></div>
+    <div id="tweet-container"></div>
+    <div id="tweetme" data-username="user" data-can-tweet="false"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -43,5 +49,21 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      var path = window.location.pathname;
+      var idRegex = /(?<tweetid>\d+)/
+      var match = path.match(idRegex) 
+      if (match) {
+        var tweetId = match.groups.tweetid
+        var tweetmeEl = document.getElementById("tweetme");
+        tweetmeEl.className = "d-none";        
+        var tweetEl =
+          '<div class="tweetme-detail" data-tweet-id="' +
+          tweetId +
+          '" data-class-name="col-6 mx-auto" ></div>';
+        var mainCointainer = document.getElementById("tweet-container");
+        mainCointainer.innerHTML = tweetEl;
+      }
+    </script>
   </body>
 </html>
