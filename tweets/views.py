@@ -14,6 +14,9 @@ def home_view(request, *args, **kwargs):
     return render(request, template_name='pages/home.html', context={"username"}, status=200)
 
 def tweets_list_view(request, *args, **kwargs):
+
+   # print("tlv:",request.data)
+    print("tlv user:",request.user)
       
     return render(request, template_name='tweets/list.html')
 
